@@ -32,6 +32,17 @@
                 .Map(w => w.ToTable("Subscriptions")
                 .MapLeftKey("OrganizerId")
                 .MapRightKey("SubscriberId"));
+
+            modelBuilder.Entity<MatchStatistic>()
+                .HasRequired(c => c.TeamRed)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<MatchStatistic>()
+                .HasRequired(c => c.TeamBlue)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
             base.OnModelCreating(modelBuilder);
         }
 
