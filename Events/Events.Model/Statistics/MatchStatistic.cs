@@ -29,5 +29,15 @@
         public int EventId { get; set; }
 
         public virtual Event Event { get; set; }
+
+        [ForeignKey("TeamStatistic")]
+        public int? TeamStatisticId { get; set; }
+
+        public virtual TeamStatistic TeamStatistic { get; set; }
+
+        [ForeignKey("UserStatistic")]
+        public int? UserStatisticId { get; set; }
+
+        public virtual UserStatistic UserStatistic { get; set; }
     }
 }

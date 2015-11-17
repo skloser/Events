@@ -38,6 +38,12 @@
                 .WithMany()
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Event>()
+                .HasOptional(ut => ut.UserTeam)
+                .WithMany(ut => ut.Events)
+                .HasForeignKey(ut => ut.UserTeamId)
+                .WillCascadeOnDelete(false);
+            
             modelBuilder.Entity<MatchStatistic>()
                 .HasRequired(c => c.TeamBlue)
                 .WithMany()

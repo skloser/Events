@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Enumerations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Event
     {
@@ -34,6 +35,11 @@
 
         [MaxLength(200)]
         public string Description { get; set; }
+
+        [ForeignKey("UserTeam")]
+        public int? UserTeamId { get; set; }
+
+        public virtual UserTeam UserTeam { get; set; }
 
         public virtual ICollection<User> Users
         {

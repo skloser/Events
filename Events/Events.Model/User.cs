@@ -56,6 +56,11 @@
 
         public virtual UserStatistic UserStatistic { get; set; }
 
+        [ForeignKey("UserTeam")]
+        public int UserTeamId { get; set; }
+
+        public virtual UserTeam UserTeam { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
