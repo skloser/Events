@@ -29,6 +29,9 @@
         [MaxLength(20)]
         public string LastName { get; set; }
 
+        [MaxLength(120)]
+        public string Address { get; set; }
+
         public virtual ICollection<User> Followers
         {
             get { return this.followers; }
@@ -52,11 +55,7 @@
             get { return this.myTeams; }
             set { this.myTeams = value; }
         }
-
-        [ForeignKey("Address")]
-        public int? AddressId { get; set; }
-
-        public virtual Address Address { get; set; }
+        
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
