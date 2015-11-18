@@ -5,14 +5,17 @@
     using System.ComponentModel.DataAnnotations;
     using Enumerations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Statistics;
 
     public class Event
     {
-        private ICollection<User> users;
+        private ICollection<Team> teams;
+        private ICollection<TeamStatistic> teamStatistics;
 
         public Event()
         {
-            this.users = new HashSet<User>();
+            this.teams = new HashSet<Team>();
+            this.teamStatistics = new HashSet<TeamStatistic>();
         }
 
         [Key]
@@ -25,6 +28,7 @@
 
         public DateTime CreatedOn { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime StartTime { get; set; }
 
         public int Capacity { get; set; }
@@ -33,18 +37,24 @@
 
         public TypeOfTeamAssemble TypeOfTeamAssemble { get; set; }
 
+        [ForeignKey("Host")]
+        public string HostId { get; set; }
+
+        public virtual User Host { get; set; }
+
         [MaxLength(200)]
         public string Description { get; set; }
 
-        [ForeignKey("UserTeam")]
-        public int? UserTeamId { get; set; }
-
-        public virtual UserTeam UserTeam { get; set; }
-
-        public virtual ICollection<User> Users
+        public virtual ICollection<Team> Teams
         {
-            get { return this.users; }
-            set { this.users = value; }
+            get { return this.teams; }
+            set { this.teams = value; }
+        }
+
+        public virtual ICollection<TeamStatistic> TeamStatistics
+        {
+            get { return this.teamStatistics; }
+            set { this.teamStatistics = value; }
         }
     }
 }

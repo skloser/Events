@@ -5,12 +5,12 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using Statistics;
 
-    public class UserTeam
+    public class Team
     {
         private ICollection<User> users;
         private ICollection<Event> events;
 
-        public UserTeam()
+        public Team()
         {
             this.users = new HashSet<User>();
             this.events = new HashSet<Event>();
@@ -21,11 +21,6 @@
 
         [Required]
         public string Name { get; set; }
-
-        [ForeignKey("Event")]
-        public int? EventId { get; set; }
-
-        public virtual Event Event { get; set; }
 
         [ForeignKey("TeamStatistic")]
         public int TeamStatisticId { get; set; }
