@@ -52,12 +52,12 @@
         public virtual Address Address { get; set; }
 
         [ForeignKey("UserStatistic")]
-        public int UserStatisticsId { get; set; }
+        public int? UserStatisticsId { get; set; }
 
         public virtual UserStatistic UserStatistic { get; set; }
 
         [ForeignKey("UserTeam")]
-        public int UserTeamId { get; set; }
+        public int? UserTeamId { get; set; }
 
         public virtual UserTeam UserTeam { get; set; }
 
