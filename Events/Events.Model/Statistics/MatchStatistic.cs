@@ -12,14 +12,14 @@
         [ForeignKey("TeamRed")]
         public int TeamRedId { get; set; }
 
-        public virtual UserTeam TeamRed { get; set; }
+        public virtual Team TeamRed { get; set; }
 
         [ForeignKey("TeamBlue")]
         public int TeamBlueId { get; set; }
 
-        public virtual UserTeam TeamBlue { get; set; }
+        public virtual Team TeamBlue { get; set; }
 
-        public DateTime TimeOfEvent { get; set; }
+        public DateTime TimeOfMatch { get; set; }
 
         public int RedTeamResult { get; set; }
 
@@ -30,14 +30,14 @@
 
         public virtual Event Event { get; set; }
 
-        [ForeignKey("TeamStatistic")]
-        public int? TeamStatisticId { get; set; }
+        [ForeignKey("TeamRedStatistic")]
+        public int? TeamRedStatisticId { get; set; }
 
-        public virtual TeamStatistic TeamStatistic { get; set; }
+        public virtual TeamStatistic TeamRedStatistic { get; set; }
 
-        [ForeignKey("UserStatistic")]
-        public int? UserStatisticId { get; set; }
+        [ForeignKey("TeamBlueStatistic")]
+        public int? TeamBlueStatisticId { get; set; }
 
-        public virtual UserStatistic UserStatistic { get; set; }
+        public virtual TeamStatistic TeamBlueStatistic { get; set; }
     }
 }

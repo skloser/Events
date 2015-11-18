@@ -7,19 +7,20 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Statistics;
 
     public class User : IdentityUser
     {
         private ICollection<User> followers;
         private ICollection<User> following;
-        private ICollection<Event> events;
+        private ICollection<Event> myEvents;
+        private ICollection<Team> myTeams;
 
         public User()
         {
             this.followers = new HashSet<User>();
             this.following = new HashSet<User>();
-            this.events = new HashSet<Event>();
+            this.myEvents = new HashSet<Event>();
+            this.myTeams = new HashSet<Team>();
         }
 
         [MaxLength(20)]
@@ -40,26 +41,22 @@
             set { this.following = value; }
         }
 
-        public virtual ICollection<Event> Events
+        public virtual ICollection<Event> MyEvents
         {
-            get { return this.events; }
-            set { this.events = value; }
+            get { return this.myEvents; }
+            set { this.myEvents = value; }
+        }
+
+        public virtual ICollection<Team> MyTeams
+        {
+            get { return this.myTeams; }
+            set { this.myTeams = value; }
         }
 
         [ForeignKey("Address")]
         public int? AddressId { get; set; }
 
         public virtual Address Address { get; set; }
-
-        [ForeignKey("UserStatistic")]
-        public int? UserStatisticsId { get; set; }
-
-        public virtual UserStatistic UserStatistic { get; set; }
-
-        [ForeignKey("UserTeam")]
-        public int? UserTeamId { get; set; }
-
-        public virtual UserTeam UserTeam { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {

@@ -64,9 +64,9 @@
     <Compile Include="Statistics\TeamStatistic.cs" />
     <Compile Include="Enumerations\TypeOfEventFormat.cs" />
     <Compile Include="Enumerations\TypeOfTeamAssemble.cs" />
+    <Compile Include="Statistics\TeamMatchStatistic.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="Statistics\UserStatistic.cs" />
-    <Compile Include="UserTeam.cs" />
+    <Compile Include="Team.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

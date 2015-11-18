@@ -14,15 +14,15 @@
 
         public virtual IDbSet<Address> Addresses { get; set; }
 
-        public virtual IDbSet<UserStatistic> UserStatistics { get; set; }
-
         public virtual IDbSet<Event> Events { get; set; }
 
-        public virtual IDbSet<UserTeam> UserTeams { get; set; }
+        public virtual IDbSet<Team> UserTeams { get; set; }
 
         public virtual IDbSet<TeamStatistic> TeamStatistics { get; set; }
 
         public virtual IDbSet<MatchStatistic> MatchStatistics { get; set; }
+
+        public virtual IDbSet<TeamMatchStatistic> TeamMatchStatistic { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -32,18 +32,12 @@
                 .Map(w => w.ToTable("Subscriptions")
                 .MapLeftKey("OrganizerId")
                 .MapRightKey("SubscriberId"));
-
+            
             modelBuilder.Entity<MatchStatistic>()
                 .HasRequired(c => c.TeamRed)
                 .WithMany()
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Event>()
-                .HasOptional(ut => ut.UserTeam)
-                .WithMany(ut => ut.Events)
-                .HasForeignKey(ut => ut.UserTeamId)
-                .WillCascadeOnDelete(false);
-            
             modelBuilder.Entity<MatchStatistic>()
                 .HasRequired(c => c.TeamBlue)
                 .WithMany()

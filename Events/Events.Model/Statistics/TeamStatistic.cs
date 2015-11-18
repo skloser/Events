@@ -1,30 +1,36 @@
 ﻿namespace Events.Model.Statistics
 {
-    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class TeamStatistic
     {
-        private ICollection<MatchStatistic> matchStatistics;
+        private ICollection<Event> eventsParticipatedIn;
+        private ICollection<TeamMatchStatistic> teamMatchStatistics;
 
         public TeamStatistic()
         {
-            this.matchStatistics = new HashSet<MatchStatistic>();
+            this.eventsParticipatedIn = new HashSet<Event>();
+            this.teamMatchStatistics = new HashSet<TeamMatchStatistic>();
         }
         [Key]
         public int TeamStatisticId { get; set; }
-
-        public int CountOfEvents { get; set; }
 
         public int Points { get; set; }
 
         public int CountOfWins { get; set; }
 
-        public virtual ICollection<MatchStatistic> MatchStatistics
+        public virtual ICollection<Event> EventsParticipatedIn
         {
-            get { return this.matchStatistics; }
-            set { this.matchStatistics = value; }
+            get { return this.eventsParticipatedIn; }
+            set { this.eventsParticipatedIn = value; }
         }
+
+        public virtual ICollection<TeamMatchStatistic> TeamMatchStatistics
+        {
+            get { return this.teamMatchStatistics; }
+            set { this.teamMatchStatistics = value; }
+        }
+
     }
 }
