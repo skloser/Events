@@ -10,12 +10,12 @@
     public class Event
     {
         private ICollection<Team> teams;
-        private ICollection<TeamStatistic> teamStatistics;
+        private ICollection<MatchStatistic> matchStatistics;
 
         public Event()
         {
             this.teams = new HashSet<Team>();
-            this.teamStatistics = new HashSet<TeamStatistic>();
+            this.matchStatistics = new HashSet<MatchStatistic>();
         }
 
         [Key]
@@ -30,13 +30,14 @@
 
         [DataType(DataType.Date)]
         public DateTime StartTime { get; set; }
-
+        
         public int Capacity { get; set; }
 
         public TypeOfEventFormat TypeOfEventFormat { get; set; }
 
         public TypeOfTeamAssemble TypeOfTeamAssemble { get; set; }
 
+        [Required]
         [ForeignKey("Host")]
         public string HostId { get; set; }
 
@@ -51,10 +52,10 @@
             set { this.teams = value; }
         }
 
-        public virtual ICollection<TeamStatistic> TeamStatistics
+        public virtual ICollection<MatchStatistic> MatchStatistics
         {
-            get { return this.teamStatistics; }
-            set { this.teamStatistics = value; }
+            get { return this.matchStatistics; }
+            set { this.matchStatistics = value; }
         }
     }
 }
