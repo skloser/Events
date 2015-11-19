@@ -15,7 +15,7 @@
 
         public virtual IDbSet<Event> Events { get; set; }
 
-        public virtual IDbSet<Team> UserTeams { get; set; }
+        public virtual IDbSet<Team> Teams { get; set; }
 
         public virtual IDbSet<MatchStatistic> MatchStatistics { get; set; }
 

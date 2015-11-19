@@ -33,6 +33,8 @@
         
         public int Capacity { get; set; }
 
+        public string Address { get; set; }
+
         public TypeOfEventFormat TypeOfEventFormat { get; set; }
 
         public TypeOfTeamAssemble TypeOfTeamAssemble { get; set; }

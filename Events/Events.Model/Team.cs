@@ -21,7 +21,7 @@
         }
 
         [Key]
-        public int UserTeamId { get; set; }
+        public int TeamId { get; set; }
 
         [Required]
         public string Name { get; set; }
