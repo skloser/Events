@@ -31,7 +31,9 @@
         [DataType(DataType.Date)]
         public DateTime StartTime { get; set; }
         
-        public int Capacity { get; set; }
+        public int TeamMembersCapacity { get; set; }
+
+        public int NumberOfTeams { get; set; }
 
         public TypeOfEventFormat TypeOfEventFormat { get; set; }
 
