@@ -30,7 +30,8 @@
 
         [DataType(DataType.Date)]
         public DateTime StartTime { get; set; }
-        
+
+        [Range(0, int.MaxValue)]
         public int Capacity { get; set; }
 
         public TypeOfEventFormat TypeOfEventFormat { get; set; }
@@ -45,6 +46,10 @@
 
         [MaxLength(200)]
         public string Description { get; set; }
+
+        [Range(0,20)]
+        public int TeamCapacity { get; set; }
+
 
         public virtual ICollection<Team> Teams
         {
