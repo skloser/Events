@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Events.Data.Repositories
+﻿namespace Events.Data.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -11,9 +9,16 @@ namespace Events.Data.Repositories
             this.eventsDbContext = eventsDbContext;
             this.Events = new EventRepository(this.eventsDbContext);
             this.Users = new UserRepository(this.eventsDbContext);
+            this.MatchStatistics = new MatchStatisticRepository(this.eventsDbContext);
         }
 
         public IEventRepository Events
+        {
+            get;
+            private set;
+        }
+
+        public IMatchStatisticRepository MatchStatistics
         {
             get;
             private set;

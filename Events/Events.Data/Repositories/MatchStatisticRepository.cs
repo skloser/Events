@@ -11,8 +11,16 @@
         {
         }
 
+        public EventsDbContext EventsDbContext
+        {
+            get { return Context as EventsDbContext; }
+        }
+
+
         public IEnumerable<MatchStatistic> GetHighestScores(int count, int page)
         {
+            //var topHighestScorePlayers = this.EventsDbContext.MatchStatistics
+
             throw new NotImplementedException();
         }
     }
