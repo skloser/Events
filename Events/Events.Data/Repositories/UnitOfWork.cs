@@ -36,7 +36,7 @@ namespace Events.Data.Repositories
             this.eventsDbContext.Dispose();
         }
 
-        public int SaveChange()
+        public int SaveChanges()
         {
             return this.eventsDbContext.SaveChanges();
         }
