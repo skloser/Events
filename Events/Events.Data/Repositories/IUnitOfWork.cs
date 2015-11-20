@@ -9,6 +9,6 @@
 
         ITeamRepository Teams { get; }
 
-        int SaveChange();
+        int SaveChanges();
     }
 }

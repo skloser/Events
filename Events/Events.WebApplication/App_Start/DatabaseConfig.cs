@@ -1,13 +1,9 @@
-﻿using Events.Data;
-using Events.Data.Migrations;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-
-namespace Events.WebApplication.App_Start
+﻿namespace Events.WebApplication.App_Start
 {
+    using Events.Data;
+    using Events.Data.Migrations;
+    using System.Data.Entity;
+
     public class DatabaseConfig
     {
         public static void Initialize()
