@@ -30,7 +30,9 @@
 
         [DataType(DataType.Date)]
         public DateTime StartTime { get; set; }
-        
+
+        public PredifinedSports? PredefinedSport { get; set; }
+
         public int Capacity { get; set; }
 
         public string Address { get; set; }

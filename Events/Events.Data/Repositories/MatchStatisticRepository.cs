@@ -1,6 +1,7 @@
 ﻿namespace Events.Data.Repositories
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Events.Model.Statistics;
 
@@ -19,7 +20,8 @@
 
         public IEnumerable<MatchStatistic> GetHighestScores(int count, int page)
         {
-            //var topHighestScorePlayers = this.EventsDbContext.MatchStatistics
+            //var topHighestScorePlayers = this.EventsDbContext.Users
+            //    .Join(this.EventsDbContext.Events, u => u.)
 
             throw new NotImplementedException();
         }
