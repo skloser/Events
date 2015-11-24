@@ -34,6 +34,10 @@
         public PredifinedSports? PredefinedSport { get; set; }
 
         public int Capacity { get; set; }
+        
+        public int TeamMembersCapacity { get; set; }
+
+        public int NumberOfTeams { get; set; }
 
         public string Address { get; set; }
 

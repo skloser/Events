@@ -79,6 +79,17 @@
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [MaxLength(20)]
+        public string FirstName { get; set; }
+
+        [MaxLength(20)]
+        public string LastName { get; set; }
+
+        [MaxLength(120)]
+        public string Address { get; set; }
+
+        public string PhoneNumber { get; set; }
     }
 
     public class ResetPasswordViewModel
