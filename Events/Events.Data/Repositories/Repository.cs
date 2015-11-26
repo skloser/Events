@@ -9,12 +9,13 @@
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly DbContext context;
-
+        private IDbSet<TEntity> entitySet;
         public Repository(DbContext context)
         {
             this.context = context;
+            this.entitySet = Context.Set<TEntity>();
         }
-
+       
         protected DbContext Context
         {
             get { return this.context; }
@@ -53,6 +54,25 @@
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
             this.context.Set<TEntity>().RemoveRange(entities);
+        }
+
+        
+
+        public TEntity Update(TEntity entity)
+        {
+            return this.ChangeState(entity, EntityState.Modified);
+        }
+
+        private TEntity ChangeState(TEntity entity, EntityState state)
+        {
+            var entry = this.Context.Entry(entity);
+            if (entry.State == EntityState.Detached)
+            {
+                this.entitySet.Attach(entity);
+            }
+
+            entry.State = state;
+            return entity;
         }
     }
 }

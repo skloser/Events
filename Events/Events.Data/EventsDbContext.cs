@@ -47,5 +47,7 @@
         {
             return new EventsDbContext();
         }
+
+        public System.Data.Entity.DbSet<Events.Model.ViewModels.UserViewModel> UserViewModels { get; set; }
     }
 }

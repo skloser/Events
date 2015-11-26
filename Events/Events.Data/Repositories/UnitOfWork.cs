@@ -19,6 +19,12 @@ namespace Events.Data.Repositories
             private set;
         }
 
+        public IMatchStatisticRepository MatchStatistics
+        {
+            get;
+            private set;
+        }
+
         public ITeamRepository Teams
         {
             get;
