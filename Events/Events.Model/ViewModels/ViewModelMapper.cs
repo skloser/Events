@@ -16,8 +16,6 @@ namespace Events.Model.ViewModels
             user.LastName = userViewModel.LastName;
             user.Address = userViewModel.Address;
             user.PhoneNumber = userViewModel.PhoneNumber;
-            user.FirstName = userViewModel.FirstName;
-
             return user;
         }
     }
