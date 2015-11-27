@@ -1,10 +1,11 @@
-﻿namespace Events.Data.Repositories
+﻿namespace Events.WebApplication.Repositories
 {
     using System.Collections.Generic;
     using Events.Model;
     using System.Linq;
+    using Data;
 
-    public class UserRepository : Repository<User>, IUserRespository
+    public class UserRepository : Repository<User>
     {
         public UserRepository(EventsDbContext eventsDbContext)
             : base(eventsDbContext)
@@ -14,11 +15,6 @@
         public EventsDbContext EventsDbContext
         {
             get { return Context as EventsDbContext; }
-        }
-
-        public IEnumerable<User> GetAllOrganizers()
-        {
-            return this.EventsDbContext.Users.Where(u => u.MyEvents != null).Select(u => u);
         }
     }
 }

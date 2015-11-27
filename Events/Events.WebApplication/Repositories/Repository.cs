@@ -1,4 +1,4 @@
-﻿namespace Events.Data.Repositories
+﻿namespace Events.WebApplication.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -32,7 +32,7 @@
 
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return this.context.Set<TEntity>().Where(predicate);
+            return this.context.Set<TEntity>().Where(predicate.Compile());
         }
 
         public TEntity Get(int id)

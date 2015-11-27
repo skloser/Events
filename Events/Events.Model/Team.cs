@@ -1,53 +1,53 @@
 ﻿namespace Events.Model
 {
-    using Statistics;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     public class Team
     {
-        private ICollection<User> members;
-        private ICollection<Event> eventsParticipatedIn;
-        private ICollection<MatchStatistic> homeMatchStatistics;
-        private ICollection<MatchStatistic> guestMatchStatistics;
+        private ICollection<Player> players;
+        private ICollection<Match> homeMatches;
+        private ICollection<Match> awayMatches;
+        private ICollection<Event> eventsJoined;
 
         public Team()
         {
-            this.members = new HashSet<User>();
-            this.eventsParticipatedIn = new HashSet<Event>();
-            this.homeMatchStatistics = new HashSet<MatchStatistic>();
-            this.guestMatchStatistics = new HashSet<MatchStatistic>();
+            this.players = new HashSet<Player>();
+            this.homeMatches = new HashSet<Match>();
+            this.awayMatches = new HashSet<Match>();
+            this.eventsJoined = new HashSet<Event>();
         }
 
         [Key]
         public int TeamId { get; set; }
 
-        [Required]
+        [MinLength(2)]
+        [MaxLength(20)]
         public string Name { get; set; }
 
-        public virtual ICollection<User> Members
+        public virtual ICollection<Player> Players
         {
-            get { return this.members; }
-            set { this.members = value; }
+            get { return this.players; }
+            set { this.players = value; }
         }
 
-        public virtual ICollection<Event> EventsParticipatedIn
+        public virtual ICollection<Match> HomeMatches
         {
-            get { return this.eventsParticipatedIn; }
-            set { this.eventsParticipatedIn = value; }
+            get { return this.homeMatches; }
+            set { this.homeMatches = value; }
         }
 
-        public virtual ICollection<MatchStatistic> HomeMatchStatistics
+        public virtual ICollection<Match> AwayMatches
         {
-            get { return this.homeMatchStatistics; }
-            set { this.homeMatchStatistics = value; }
+            get { return this.awayMatches; }
+            set { this.awayMatches = value; }
         }
 
-        public virtual ICollection<MatchStatistic> GuestMatchStatistics
+        public virtual ICollection<Event> EventsJoined
         {
-            get { return this.guestMatchStatistics; }
-            set { this.guestMatchStatistics = value; }
+            get { return this.eventsJoined; }
+            set { this.eventsJoined = value; }
         }
     }
 }

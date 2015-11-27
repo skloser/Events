@@ -1,9 +1,10 @@
-﻿namespace Events.Data.Repositories
+﻿namespace Events.WebApplication.Repositories
 {
     using System.Collections.Generic;
     using Events.Model;
     using System.Data.Entity;
     using System.Linq;
+    using Data;
 
     public class EventRepository : Repository<Event>, IEventRepository
     {
