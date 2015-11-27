@@ -59,7 +59,9 @@
   <ItemGroup>
     <Compile Include="Event.cs" />
     <Compile Include="Enumerations\PredifinedSports.cs" />
-    <Compile Include="Statistics\MatchStatistic.cs" />
+    <Compile Include="Match.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PredefinedSport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enumerations\TypeOfEventFormat.cs" />
     <Compile Include="Enumerations\TypeOfTeamAssemble.cs" />

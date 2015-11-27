@@ -1,4 +1,4 @@
-﻿namespace Events.Data.Repositories
+﻿namespace Events.WebApplication.Repositories
 {
     using Events.Model;
     using System.Collections.Generic;
