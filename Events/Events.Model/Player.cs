@@ -11,12 +11,12 @@ namespace Events.Model
     public class Player
     {
         private ICollection<Team> teams;
-        private ICollection<Event> events;
+        private ICollection<Event> myEvents;
 
         public Player()
         {
             this.teams = new HashSet<Team>();
-            this.events = new HashSet<Event>();
+            this.myEvents = new HashSet<Event>();
         }
 
         [Key]
@@ -38,8 +38,8 @@ namespace Events.Model
 
         public virtual ICollection<Event> Events
         {
-            get { return this.events; }
-            set { this.events = value; }
+            get { return this.myEvents; }
+            set { this.myEvents = value; }
         }
 
     }
