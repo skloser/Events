@@ -25,15 +25,15 @@
         [MaxLength(25)]
         public string Title { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime CreatedOn { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime StartTime { get; set; }
 
         public PredifinedSports? PredefinedSport { get; set; }
 
-        public int Capacity { get; set; }
-        
         public int TeamMembersCapacity { get; set; }
 
         public int NumberOfTeams { get; set; }
@@ -42,9 +42,8 @@
 
         public TypeOfEventFormat TypeOfEventFormat { get; set; }
 
-        public TypeOfTeamAssemble TypeOfTeamAssemble { get; set; }
+        public TypeOfMatchAssemble TypeOfMatchAssemble { get; set; }
 
-        [Required]
         [ForeignKey("Host")]
         public int? HostId{ get; set; }
 

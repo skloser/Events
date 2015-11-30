@@ -22,7 +22,7 @@ namespace Events.Model
         [Key]
         public int PlayerId { get; set; }
 
-        public string Name { get; set; }
+        public string UserName { get; set; }
 
         [ForeignKey("User")]
         [Index(IsUnique = true)]

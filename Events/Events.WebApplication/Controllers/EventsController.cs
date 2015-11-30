@@ -10,6 +10,8 @@
     using System.Web.Mvc;
     using Events.Data;
     using Events.Model;
+    using Microsoft.AspNet.Identity;
+    using Model.Enumerations;
 
     public class EventsController : Controller
     {
@@ -52,19 +54,30 @@
         public ActionResult Create()
         {
             //ViewBag.Host = this.User.Identity;
+            //ViewBag.TypeOfEventFormat = new SelectList(typeof(TypeOfEventFormat));
             return View();
         }
 
         // POST: Events/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventId,Title,CreatedOn,StartTime,TeamMembersCapacity,NumberOfTeams,TypeOfEventFormat,TypeOfTeamAssemble,HostId,Description")] Event eventModel)
+        public ActionResult Create(Event eventModel)
         {
+            var errors = ModelState.Select(m => m.Value.Errors);
             if (!ModelState.IsValid)
             {
                 //ViewBag.HostId = new SelectList(context.Users, "Id", "FirstName", @event.HostId);
                 return View(eventModel);
             }
+
+            string userId = this.User.Identity.GetUserId();
+            var player = context.Players.FirstOrDefault(p => p.UserId == userId);
+
+            eventModel.HostId = player.PlayerId;
+            eventModel.CreatedOn = DateTime.Now;
+
+
             context.Events.Add(eventModel);
             context.SaveChanges();
             return RedirectToAction("Index");

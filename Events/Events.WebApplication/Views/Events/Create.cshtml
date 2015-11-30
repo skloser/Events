@@ -23,21 +23,15 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedOn, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.NumberOfTeams, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -64,20 +58,21 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TypeOfTeamAssemble, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(e => e.StartTime, "Event start time", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.TypeOfTeamAssemble, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TypeOfTeamAssemble, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(e => e.StartTime, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.HostId, "HostId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.LabelFor(e => e.TypeOfMatchAssemble, "Type of match assemble", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("HostId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.HostId, "", new { @class = "text-danger" })
+                @Html.EnumDropDownListFor(e => e.TypeOfMatchAssemble, null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(e => e.TypeOfMatchAssemble, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
