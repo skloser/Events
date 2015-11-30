@@ -1,7 +1,7 @@
 ﻿namespace Events.WebApplication.Controllers
 {
     using Data;
-    using Model.Statistics;
+    using Model;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -20,15 +20,15 @@
 
         public ActionResult UserStatistics()
         {
-            List<MatchStatistic> userAllMatchStatistics = new List<MatchStatistic>();
-            var userTeams = context.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault().MyTeams;
+            List<Match> userAllMatchStatistics = new List<Match>();
+            var userTeams = context.Players.Where(u => u.User.UserName == User.Identity.Name).FirstOrDefault().MyTeams;
             foreach (var userTeam in userTeams)
             {
-                foreach (var homeGames in userTeam.HomeMatchStatistics)
+                foreach (var homeGames in userTeam.HomeMatches)
                 {
                     userAllMatchStatistics.Add(homeGames);
                 }
-                foreach (var awayGames in userTeam.GuestMatchStatistics)
+                foreach (var awayGames in userTeam.AwayMatches)
                 {
                     userAllMatchStatistics.Add(awayGames);
                 }

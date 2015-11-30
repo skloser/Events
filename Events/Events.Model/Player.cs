@@ -30,7 +30,7 @@ namespace Events.Model
 
         public virtual User User { get; set; }
 
-        public virtual ICollection<Team> Teams
+        public virtual ICollection<Team> MyTeams
         {
             get { return this.teams; }
             set { this.teams = value; }

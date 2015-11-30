@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Events.Data;
-using Events.Model;
-using Events.Data.Repositories;
-using Events.Model.Statistics;
-
-namespace Events.WebApplication.Controllers
+﻿namespace Events.WebApplication.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Web;
+    using System.Web.Mvc;
+    using Events.Data;
+    using Events.Model;
+
     public class EventsController : Controller
     {
         private EventsDbContext context = new EventsDbContext();
@@ -30,7 +28,7 @@ namespace Events.WebApplication.Controllers
         // GET: Events
         public ActionResult Index()
         {
-            var events = context.Events.Where(e => e.Host.UserName == User.Identity.Name);
+            var events = context.Events.Where(e => e.Host.User.UserName == User.Identity.Name);
             
             return View(events);
         }
