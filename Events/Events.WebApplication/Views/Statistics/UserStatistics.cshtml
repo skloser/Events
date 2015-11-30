@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Events.Model.Statistics.MatchStatistic>
+
+@{
+    ViewBag.Title = "UserStatistics";
+}
+
+<h2>UserStatistics</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Event.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GuestTeam.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HomeTeam.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeOfMatch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HomeTeamResult)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GuestTeamResult)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var match in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => match.Event.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => match.GuestTeam.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => match.HomeTeam.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => match.TimeOfMatch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => match.HomeTeamResult)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => match.GuestTeamResult)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", null, new { id= match.MatchStatisticId }) |
+            @Html.ActionLink("Details", null, new { id= match.MatchStatisticId }) |
+            @Html.ActionLink("Delete", null, new { id= match.MatchStatisticId })
+        </td>
+    </tr>
+}
+
+</table>
