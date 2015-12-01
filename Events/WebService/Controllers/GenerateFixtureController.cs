@@ -22,6 +22,7 @@ namespace WebService.Controllers
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult GetMatches()
         {
+            
             var teams = new Dictionary<Team, int>();
             List<Team> teamList = new List<Team>();
             for (int i = 0; i < 16; i++)
@@ -39,8 +40,13 @@ namespace WebService.Controllers
                 teams.Add(teamList[i], i + 1);
             }
 
+            for (int i = 4; i < 100; i+=2)
+            {
+                int numberOfUrns = MatchGenerator.GetNumberOfUrns(i);
+            }
+            
             var allMatches = MatchGenerator.GenerateMatches(teams, 4);
-            StringBuilder json = new StringBuilder();
+
             var fixture = new List<Fixture>();
             foreach (var round in allMatches)
             {
@@ -53,18 +59,10 @@ namespace WebService.Controllers
                     {
                         Game = game,
                         Round = rnd
-                    });
-                    //json.Append(@", {""Round"" : " + round.FirstOrDefault().Value);
-                    //json.Append(@", ""Game"": " + match.Key.HomeTeam.Name + " vs " + match.Key.GuestTeam.Name + "}");
+                    });                 
                 }
             }
-            //string jsonstr = json.ToString();
-            //int beggining = jsonstr.IndexOf("{");
-            //int end = jsonstr.LastIndexOf("}");
-            //string cleanMatches = "["+ jsonstr.Substring(beggining, end - beggining+1)+"]";
-           //// var result = JsonConvert.SerializeObject(cleanMatches);
-           // JObject result = JObject.Parse(cleanMatches);
-
+        
             return Json(fixture);
         }
     }

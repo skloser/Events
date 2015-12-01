@@ -18,20 +18,39 @@ namespace Events.WebApplication.GenerateMatches
                 var urns = new List<Team[]>();
                 if (round == 1)
                 {
-                    urns = GenerateUrns(teamRanks, numberOfUrns);
-                    var matchList = new Dictionary<Game, int>();
-                    var otherMatchList = new Dictionary<Game, int>();
+                    //urns = GenerateUrns(teamRanks, numberOfUrns);
+                    //var matchList = new Dictionary<Game, int>();
+                    //var otherMatchList = new Dictionary<Game, int>();
 
-                    matchList = GenerateGames(round, urns, matchList, true);
-                    var other = GenerateGames(round, urns, otherMatchList, false);
+                    //matchList = GenerateGames(round, urns, matchList, true);
+                    //var other = GenerateGames(round, urns, otherMatchList, false);
 
-                    var merged = MergeMatches(matchList, otherMatchList);
-                    allMatches.Add(merged);
+                    //var merged = MergeMatches(matchList, otherMatchList);
+                    //allMatches.Add(merged);
+                   allMatches.Add( FirstRound(teamRanks.Keys.ToList()));
                 }
                 allMatches.Add( NextRound(allMatches.Last(),round+1));
             }
             return allMatches;
         }
+
+        private static Dictionary<Game, int> FirstRound(List<Team> allTeams)
+        {
+            var firstRound = new Dictionary<Game, int>();
+            Random rnd = new Random();
+            var shuffledTeams = allTeams.OrderBy(x => rnd.Next()).ToArray();
+            for (int i = 0; i < shuffledTeams.Count(); i += 2)
+            {
+                var teams = new Team[2];
+                teams[0] = shuffledTeams[i];
+                teams[1] = shuffledTeams[i + 1];
+                var match = new Game(teams[0], teams[1]);
+
+                firstRound.Add(match, 1);
+            }
+            return firstRound;
+        }
+
 
         private static Dictionary<Game, int> NextRound(Dictionary<Game, int> lastRound,int round)
         {
@@ -42,12 +61,13 @@ namespace Events.WebApplication.GenerateMatches
                 var winner = new Team { Name = "<Winner of "+game.Key.HomeTeam.Name + " vs " + game.Key.GuestTeam.Name+" >" };
                 allGames.Add(winner);
             }
-
-            for (int i = 0; i < allGames.Count-1; i+=2)
+            Random rnd = new Random();
+            var shuffledGames = allGames.OrderBy(x => rnd.Next()).ToArray();
+            for (int i = 0; i < shuffledGames.Count(); i+=2)
             {
                 var teams =  new Team[2];
-                teams[0] = allGames[i];
-                teams[1] = allGames[i + 1];
+                teams[0] = shuffledGames[i];
+                teams[1] = shuffledGames[i + 1];
                 var match = new Game(teams[0], teams[1]);
                             
                 nextRound.Add(match,round);
@@ -199,6 +219,16 @@ namespace Events.WebApplication.GenerateMatches
             }
         }
 
+        public static int GetNumberOfUrns(int numberOfTeams)
+        {
+            int powersToTwo = 0;
+           while(numberOfTeams%2==0 && Math.Pow(2,powersToTwo)<numberOfTeams)
+            {              
+                numberOfTeams = numberOfTeams / 2;
+                powersToTwo++;
+            }
+            return (int)Math.Pow(2, powersToTwo);
+        }
 
        
     }
