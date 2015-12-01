@@ -29,7 +29,7 @@
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime CreatedOn { get; set; }
 
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartTime { get; set; }
 
@@ -41,8 +41,6 @@
 
         public string Address { get; set; }
 
-        public TypeOfEventFormat TypeOfEventFormat { get; set; }
-
         public TypeOfMatchAssemble TypeOfMatchAssemble { get; set; }
 
         [ForeignKey("Host")]
@@ -51,6 +49,7 @@
         public virtual Player Host { get; set; }
 
         [MaxLength(200)]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         public virtual ICollection<Team> Teams
