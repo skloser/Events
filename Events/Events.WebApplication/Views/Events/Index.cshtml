@@ -4,10 +4,10 @@
     ViewBag.Title = "My events";
 }
 
-<h2>My events</h2>
+<h2>All events</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })
 </p>
 <table class="table">
     <tr>
@@ -30,40 +30,43 @@
             @Html.DisplayNameFor(model => model.TypeOfEventFormat)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TypeOfTeamAssemble)
+            @Html.DisplayNameFor(model => model.TypeOfMatchAssemble)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartTime)
-        </td>
-        <th>
-            @Html.DisplayNameFor(model => model.NumberOfTeams)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TeamMembersCapacity)
-        </th>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeOfEventFormat)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeOfTeamAssemble)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EventId }, new { @class = "btn btn-default"}) |
-            @Html.ActionLink("Details", "Details", new { id=item.EventId }, new { @class = "btn btn-default"}) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EventId }, new { @class = "btn btn-default"})
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.NumberOfTeams)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.TeamMembersCapacity)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfEventFormat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfMatchAssemble)
+            </td>
+            <td>
+                <div class="btn-group">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EventId }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Details", "Details", new { id = item.EventId }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EventId }, new { @class = "btn btn-default" })
+                </div>
+            </td>
+        </tr>
+    }
 
 </table>

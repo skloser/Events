@@ -30,6 +30,7 @@
         public DateTime CreatedOn { get; set; }
 
         [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartTime { get; set; }
 
         public PredifinedSports? PredefinedSport { get; set; }

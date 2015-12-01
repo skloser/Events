@@ -11,11 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Host.FirstName)
+            @Html.DisplayNameFor(model => model.Host.User.FirstName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Host.FirstName)
+            @Html.DisplayFor(model => model.Host.User.FirstName)
         </dd>
 
         <dt>
@@ -67,11 +67,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TypeOfTeamAssemble)
+            @Html.DisplayNameFor(model => model.TypeOfMatchAssemble)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TypeOfTeamAssemble)
+            @Html.DisplayFor(model => model.TypeOfMatchAssemble)
         </dd>
 
         <dt>
@@ -85,6 +85,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }, new { @class = "btn btn-default"}) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default"})
 </p>

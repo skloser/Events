@@ -21,17 +21,14 @@
         //{
         //    this.context = new UnitOfWork(new EventsDbContext());
         //}
-
-        //public EventsController(IUnitOfWork context)
-        //{
-        //    this.context = context;
-        //}
+        
 
         // GET: Events
         public ActionResult Index()
         {
-            var events = context.Events.Where(e => e.Host.User.UserName == User.Identity.Name);
-            
+            //var events = context.Events.Where(e => e.Host.User.UserName == User.Identity.Name);
+            var events = context.Events;
+
             return View(events);
         }
 
@@ -76,6 +73,7 @@
 
             eventModel.HostId = player.PlayerId;
             eventModel.CreatedOn = DateTime.Now;
+            eventModel.StartTime = DateTime.Now;
 
 
             context.Events.Add(eventModel);
