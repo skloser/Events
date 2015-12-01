@@ -12,16 +12,14 @@
     {
         private ICollection<User> followers;
         private ICollection<User> following;
-        private ICollection<Event> myEvents;
-        private ICollection<Team> myTeams;
 
         public User()
         {
             this.followers = new HashSet<User>();
             this.following = new HashSet<User>();
-            this.myEvents = new HashSet<Event>();
-            this.myTeams = new HashSet<Team>();
         }
+
+
 
         [MaxLength(20)]
         public string FirstName { get; set; }
@@ -43,20 +41,7 @@
             get { return this.following; }
             set { this.following = value; }
         }
-
-        public virtual ICollection<Event> MyEvents
-        {
-            get { return this.myEvents; }
-            set { this.myEvents = value; }
-        }
-
-        public virtual ICollection<Team> MyTeams
-        {
-            get { return this.myTeams; }
-            set { this.myTeams = value; }
-        }
         
-
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);

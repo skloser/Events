@@ -9,12 +9,14 @@
     using Microsoft.Owin.Security;
     using Events.WebApplication.Models;
     using Events.Model;
+    using Data;
 
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private EventsDbContext eventsDbContext;
 
         public AccountController()
         {
@@ -147,18 +149,37 @@
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
             if (ModelState.IsValid)
             {
                 var user = new User
                 {
-                    UserName = model.Email,
+                    UserName = model.UserName,
                     Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Address = model.Address,
                     PhoneNumber = model.PhoneNumber
                 };
-                var result = await UserManager.CreateAsync(user, model.Password);
+
+                var result = UserManager.Create(user, model.Password);
+                
+                this.eventsDbContext = new EventsDbContext();
+
+                if (result != null)
+                {
+                    string currentUserId = user.Id;
+
+                    var player = new Player
+                    {
+                        Name = model.UserName,
+                        UserId = user.Id
+                    };
+
+                    this.eventsDbContext.Players.Add(player);
+                    this.eventsDbContext.SaveChanges();
+                }
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

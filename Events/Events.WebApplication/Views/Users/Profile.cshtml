@@ -9,6 +9,15 @@
 <div>
 
     <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>
@@ -53,7 +62,7 @@
             @Html.DisplayName("Subscribers count")
         </dt>
 
-        <dd >
+        <dd>
             <p id="subsCount">@Html.DisplayFor(model => model.Followers.Count)</p>
         </dd>
 
@@ -73,26 +82,26 @@
                 @Html.Display(e.TypeOfEventFormat.ToString())
                 @Html.Display(e.NumberOfTeams.ToString())
             }
-           
+
         </dd>
 
     </dl>
 </div>
 
 @if (Model.Email != User.Identity.Name &&
-    !Model.Followers.Select(x => x.Email).ToList().Contains(User.Identity.Name))
+                !Model.Followers.Select(x => x.Email).ToList().Contains(User.Identity.Name))
 {
-<div class="form-group" >
-    <div class="col-md-offset-2 col-md-10">
-        <input type="button" class="btn btn-default" value="Subscribe" id="sub"/>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" class="btn btn-default" value="Subscribe" id="sub" />
+        </div>
     </div>
-</div>
 }
 else
 {
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="button" class="btn btn-default" value="Unsubscribe" id="unsub"/>
+            <input type="button" class="btn btn-default" value="Unsubscribe" id="unsub" />
         </div>
     </div>
 }

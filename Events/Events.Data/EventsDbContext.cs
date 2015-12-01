@@ -2,7 +2,6 @@
 {
     using System.Data.Entity;
     using Events.Model;
-    using Events.Model.Statistics;
     using Microsoft.AspNet.Identity.EntityFramework;
 
     public class EventsDbContext : IdentityDbContext<User>
@@ -11,13 +10,14 @@
             : base("EventsDbConnection", throwIfV1Schema: false)
         {
         }
-
-
+        
         public virtual IDbSet<Event> Events { get; set; }
 
         public virtual IDbSet<Team> Teams { get; set; }
 
-        public virtual IDbSet<MatchStatistic> MatchStatistics { get; set; }
+        public virtual IDbSet<Match> Match { get; set; }
+
+        public virtual IDbSet<Player> Players { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -28,17 +28,29 @@
                 .MapLeftKey("OrganizerId")
                 .MapRightKey("SubscriberId"));
 
-            modelBuilder.Entity<MatchStatistic>()
-                 .HasRequired(m => m.HomeTeam)
-                 .WithMany(t => t.HomeMatchStatistics)
-                 .HasForeignKey(m => m.HomeTeamId)
-                 .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Match>()
+            //     .HasRequired(m => m.HomeTeam)
+            //     .WithMany(t => t.HomeMatchStatistics)
+            //     .HasForeignKey(m => m.HomeTeamId)
+            //     .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<MatchStatistic>()
-                   .HasRequired(m => m.GuestTeam)
-                   .WithMany(t => t.GuestMatchStatistics)
-                   .HasForeignKey(m => m.GuestTeamId)
-                   .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Match>()
+            //       .HasRequired(m => m.GuestTeam)
+            //       .WithMany(t => t.GuestMatchStatistics)
+            //       .HasForeignKey(m => m.GuestTeamId)
+            //       .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<Match>()
+                .HasRequired(m => m.HomeTeam)
+                .WithMany(t => t.HomeMatches)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Match>()
+                .HasRequired(m => m.GuestTeam)
+                .WithMany(t => t.AwayMatches)
+                .WillCascadeOnDelete(false);
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -47,9 +59,5 @@
         {
             return new EventsDbContext();
         }
-
-        public System.Data.Entity.DbSet<Events.Model.ViewModels.UserViewModel> UserViewModels { get; set; }
-
-      
     }
 }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Events.Model.ViewModels;
-using Events.Data.Repositories;
+using Events.WebApplication.Models;
 using Events.Model;
 using System.Threading.Tasks;
+using Events.Model.ViewModels;
+using Events.Data.Repositories;
+
 namespace Events.WebApplication.Controllers
 {
     public class UsersController : Controller
@@ -15,12 +17,14 @@ namespace Events.WebApplication.Controllers
         [Authorize]
         public ActionResult MyProfile()
         {
-            UserViewModel userInfo = new UserViewModel();
+            User userInfo = new User();
+            var userVM = new UserViewModel();
             using (IUnitOfWork data = new UnitOfWork(new Data.EventsDbContext()))
             {
                  userInfo = data.Users.GetUserInfo(User.Identity.Name);
+                userVM = ViewModelMapper.MapUserToUserViewModel(userInfo, userVM);
             }
-                return View("MyProfile",userInfo);
+                return View("MyProfile",userVM);
         }
 
         public async Task<ActionResult> UpdateProfileAsync(UserViewModel userViewModel)
@@ -37,6 +41,7 @@ namespace Events.WebApplication.Controllers
             {
               var currentUser = data.Users.GetUser(userViewModel.Id);
                 userUpdated = ViewModelMapper.MapUserViewModelToUser(currentUser, userViewModel);
+                
                 data.Users.Update(userUpdated);
                 data.SaveChanges();
             }
@@ -44,21 +49,20 @@ namespace Events.WebApplication.Controllers
         }
 
         [Authorize]
-        public ActionResult UserProfile(string email="orhan@abv.bg")
+        public ActionResult UserProfile(string email="orhankj")
         {
-            var userInfo = new UserViewModel();
+            var userInfo = new User();
+            var userVM = new UserViewModel();
             using (IUnitOfWork data = new UnitOfWork(new Data.EventsDbContext()))
             {
-                 userInfo = data.Users.GetUserInfo(email);               
+                userInfo = data.Users.GetUserInfo(email);  
+                userVM = ViewModelMapper.MapUserToUserViewModel(userInfo, userVM);
             }
-            return View("Profile", userInfo);
+            return View("Profile", userVM);
         }
 
 
-        //public async Task SubscribeAsync(string id)
-        //{
-        //    await Task.Run(() => Subscribe(id));
-        //}
+     
 
         [Authorize]
         public JsonResult Subscribe(string id)
@@ -72,12 +76,6 @@ namespace Events.WebApplication.Controllers
             }
             return Json(new { Operation = "successful" }, JsonRequestBehavior.AllowGet);
         }
-
-
-        //public async Task UnsubscribeAsync(string id)
-        //{
-        //    await Task.Run(() => Unsubscribe(id));
-        //}
 
         public JsonResult Unsubscribe(string id)
         {

@@ -5,17 +5,16 @@
     using System.ComponentModel.DataAnnotations;
     using Enumerations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using Statistics;
 
     public class Event
     {
         private ICollection<Team> teams;
-        private ICollection<MatchStatistic> matchStatistics;
+        private ICollection<Match> match;
 
         public Event()
         {
             this.teams = new HashSet<Team>();
-            this.matchStatistics = new HashSet<MatchStatistic>();
+            this.match = new HashSet<Match>();
         }
 
         [Key]
@@ -30,6 +29,10 @@
 
         [DataType(DataType.Date)]
         public DateTime StartTime { get; set; }
+
+        public PredifinedSports? PredefinedSport { get; set; }
+
+        public int Capacity { get; set; }
         
         public int TeamMembersCapacity { get; set; }
 
@@ -43,9 +46,9 @@
 
         [Required]
         [ForeignKey("Host")]
-        public string HostId { get; set; }
+        public int? HostId{ get; set; }
 
-        public virtual User Host { get; set; }
+        public virtual Player Host { get; set; }
 
         [MaxLength(200)]
         public string Description { get; set; }
@@ -56,10 +59,10 @@
             set { this.teams = value; }
         }
 
-        public virtual ICollection<MatchStatistic> MatchStatistics
+        public virtual ICollection<Match> MatchStatistics
         {
-            get { return this.matchStatistics; }
-            set { this.matchStatistics = value; }
+            get { return this.match; }
+            set { this.match = value; }
         }
     }
 }

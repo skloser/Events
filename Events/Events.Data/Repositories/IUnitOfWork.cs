@@ -9,7 +9,6 @@
 
         ITeamRepository Teams { get; }
 
-        IMatchStatisticRepository MatchStatistics { get; }
         int SaveChanges();
     }
 }
