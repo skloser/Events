@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Events.WebApplication.Models.TeamsViewModel>
+
+@{
+    ViewBag.Title = "JoinTeam";
+}
+
+<h2>JoinTeam</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        bool isMember = false;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <ul>
+                    
+                    @foreach (var member in item.Members)
+                    {
+                        <li>@member.Name</li>
+
+                        if (member.PlayerId == ViewBag.CurrentPlayerId)
+                        {
+                            isMember = true;
+                        }
+
+                    }
+
+                </ul>
+            </td>
+            <td>
+                @if (isMember)
+                {
+                    @Html.ActionLink("Leave", "Leave", new { id = item.TeamViewModelId }, new { @class = "leaveActionLink" })
+                }
+                else
+                {
+                    @Html.ActionLink("Join", "Join", new { id = item.TeamViewModelId }, new { @class = "joinActionLink" })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
