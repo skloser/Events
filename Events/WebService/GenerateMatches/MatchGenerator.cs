@@ -11,12 +11,53 @@ namespace Events.WebApplication.GenerateMatches
         private static IList<Team[]> matches = new List<Team[]>();
 
 
-        public static List<Dictionary<Game, int>> GroupStages(IDictionary<Team, int> teamRanks, int numberOfUrns)
+        public static List<Team[]> GroupStages(IDictionary<Team, int> teamRanks, int numberOfUrns)
         {
             var groups = new List<Team[]>();
             var urns = GenerateUrns(teamRanks, numberOfUrns);
+            groups = GenerateGroups(urns, teamRanks.Keys.Count / numberOfUrns);
 
-            return null;
+            return groups;
+        }
+
+        public static List<Dictionary<Game, int>> GroupStageMatches(Team[] teams)
+        {
+            int rounds = teams.Length;
+            List<Dictionary<Game, int>> allMatches = new List<Dictionary<Game, int>>();            
+            for (int round = 1; round <= rounds; round++)
+            {
+                var roundGames = new Dictionary<Game, int>();
+                
+                for (int i = 0; i < rounds;i+=2)
+                {
+                    var som = VariationsNoRepetitionsFast.GetVariations(teams);
+                }
+                allMatches.Add(roundGames);
+            }
+            return allMatches;
+        }
+
+        private static List<Team[]> GenerateGroups(List<Team[]> urns, int groupSize)
+        {
+            var groups = new List<Team[]>();
+            Random rnd = new Random();
+            urns = urns.OrderBy(x => rnd.Next()).ToList();
+            int skip = 0;
+
+            for (int group = 1; group <= groupSize; group++)
+            {
+                var teams = new  Team[groupSize];
+                for (int i = 0, index = 0; i < urns.Count; i++,index++)
+                {
+                    var team = urns[i][skip];
+                    teams[index] = team;
+                    
+                }
+                skip++;
+                groups.Add(teams);
+            }
+            return groups;
+            
         }
         public static List<Dictionary<Game, int>> GenerateRandomKnockoutMatches (List<Team> teamRanks)
         {

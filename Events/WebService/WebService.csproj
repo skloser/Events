@@ -220,6 +220,7 @@
     <Compile Include="GenerateMatches\Fixture.cs" />
     <Compile Include="GenerateMatches\Game.cs" />
     <Compile Include="GenerateMatches\MatchGenerator.cs" />
+    <Compile Include="GenerateMatches\VariationswithNoRepetitionsFast.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
