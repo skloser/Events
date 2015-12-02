@@ -56,7 +56,7 @@
             </td>
             <td>
                 <div class="btn-group">
-                    @if (item.HostId != ViewBag.UserId)
+                    @if (item.HostId != ViewBag.Player.PlayerId)
                     {
                         //ToDO : FIx the linq to return bool
                         var isNotInTheEvent = item.Teams.Any(e => e.Players.Contains(ViewBag.CurrentPlayer));

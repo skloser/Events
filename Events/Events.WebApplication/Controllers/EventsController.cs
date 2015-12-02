@@ -26,7 +26,7 @@
         // GET: Events
         public ActionResult Index()
         {
-            var events = context.Events;
+            var events = context.Events.Include(e => e.Teams);
 
             var currentUserId = this.User.Identity.GetUserId();
             var player = context.Players.Where(pl => pl.UserId == currentUserId);
@@ -80,7 +80,7 @@
 
             eventModel.HostId = player.PlayerId;
             eventModel.CreatedOn = DateTime.Now;
-            eventModel.StartTime = DateTime.Now;
+            //eventModel.StartTime = DateTime.Now;
 
 
             context.Events.Add(eventModel);
