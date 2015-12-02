@@ -45,7 +45,7 @@ namespace WebService.Controllers
                 int numberOfUrns = MatchGenerator.GetNumberOfUrns(i);
             }
             
-            var allMatches = MatchGenerator.GenerateMatches(teams, 4);
+            var allMatches = MatchGenerator.GenerateRandomKnockoutMatches(teamList);
 
             var fixture = new List<Fixture>();
             foreach (var round in allMatches)
@@ -65,5 +65,32 @@ namespace WebService.Controllers
         
             return Json(fixture);
         }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult GroupStages()
+        {
+            var teams = new Dictionary<Team, int>();
+            List<Team> teamList = new List<Team>();
+            for (int i = 0; i < 16; i++)
+            {
+                Team t1 = new Team
+                {
+                    TeamId = i + 1,
+                    Name = "Team " + (i + 1),
+                };
+                teamList.Add(t1);
+            }
+
+            for (int i = 0; i < teamList.Count; i++)
+            {
+                teams.Add(teamList[i], i + 1);
+            }
+
+          
+                int numberOfUrns = MatchGenerator.GetNumberOfUrns(teams.Keys.Count);
+            var groups = MatchGenerator.GroupStages(teams, numberOfUrns);
+            return Ok();
+        }
+
     }
 }

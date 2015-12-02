@@ -9,7 +9,16 @@ namespace Events.WebApplication.GenerateMatches
     public class MatchGenerator
     {
         private static IList<Team[]> matches = new List<Team[]>();
-        public static List<Dictionary<Game, int>> GenerateMatches (IDictionary<Team,int> teamRanks, int numberOfUrns)
+
+
+        public static List<Dictionary<Game, int>> GroupStages(IDictionary<Team, int> teamRanks, int numberOfUrns)
+        {
+            var groups = new List<Team[]>();
+            var urns = GenerateUrns(teamRanks, numberOfUrns);
+
+            return null;
+        }
+        public static List<Dictionary<Game, int>> GenerateRandomKnockoutMatches (List<Team> teamRanks)
         {
             int rounds = CalcNumberOfRounds(teamRanks.Count);
             List<Dictionary<Game, int>> allMatches = new List<Dictionary<Game, int>>();
@@ -27,7 +36,7 @@ namespace Events.WebApplication.GenerateMatches
 
                     //var merged = MergeMatches(matchList, otherMatchList);
                     //allMatches.Add(merged);
-                   allMatches.Add( FirstRound(teamRanks.Keys.ToList()));
+                   allMatches.Add(FirstRound(teamRanks));
                 }
                 allMatches.Add( NextRound(allMatches.Last(),round+1));
             }
