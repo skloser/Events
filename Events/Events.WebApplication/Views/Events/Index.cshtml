@@ -29,7 +29,9 @@
         <th>
             @Html.DisplayNameFor(model => model.TypeOfMatchAssemble)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Teams)
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -55,8 +57,18 @@
                 @Html.DisplayFor(modelItem => item.TypeOfMatchAssemble)
             </td>
             <td>
+                <ul>
+                    @foreach (var team in item.Teams)
+                    {
+                        <li>
+                            @team.Name
+                        </li>
+                    }
+                </ul>
+            </td>
+            <td>
                 <div class="btn-group">
-                    @if (item.HostId != ViewBag.Player.PlayerId)
+                    @if (item.Host != ViewBag.CurrentPlayer)
                     {
                         //ToDO : FIx the linq to return bool
                         var isNotInTheEvent = item.Teams.Any(e => e.Players.Contains(ViewBag.CurrentPlayer));

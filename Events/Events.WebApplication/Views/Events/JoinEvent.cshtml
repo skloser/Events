@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Join Event";
+}
+
+<h2>Join Event</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Hidden("id", "id")
+    <div>
+        @Html.DropDownList("TeamPicked", new SelectList(ViewBag.Teams, "TeamId", "Name"), new { @class = "form-control" })
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Pick team" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
