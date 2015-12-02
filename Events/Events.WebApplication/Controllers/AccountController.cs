@@ -172,7 +172,7 @@
 
                     var player = new Player
                     {
-                        Name = model.UserName,
+                        UserName = model.UserName,
                         UserId = user.Id
                     };
 

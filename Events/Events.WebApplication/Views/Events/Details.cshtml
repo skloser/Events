@@ -1,0 +1,90 @@
+﻿@model Events.Model.Event
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Host.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Host.User.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfTeams)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfTeams)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TeamMembersCapacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamMembersCapacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfEventFormat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfEventFormat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfMatchAssemble)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfMatchAssemble)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }, new { @class = "btn btn-default"}) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default"})
+</p>
