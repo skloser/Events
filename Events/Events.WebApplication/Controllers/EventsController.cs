@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Events.Data;
-using Events.Model;
-using Events.Data.Repositories;
-using Events.Model.Statistics;
-
-namespace Events.WebApplication.Controllers
+﻿namespace Events.WebApplication.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Web;
+    using System.Web.Mvc;
+    using Events.Data;
+    using Events.Model;
+    using Microsoft.AspNet.Identity;
+    using Model.Enumerations;
+
     public class EventsController : Controller
     {
         private EventsDbContext context = new EventsDbContext();
@@ -21,17 +21,24 @@ namespace Events.WebApplication.Controllers
         //{
         //    this.context = new UnitOfWork(new EventsDbContext());
         //}
-
-        //public EventsController(IUnitOfWork context)
-        //{
-        //    this.context = context;
-        //}
+        
 
         // GET: Events
         public ActionResult Index()
         {
-            var events = context.Events.Where(e => e.Host.UserName == User.Identity.Name);
-            
+            var events = context.Events.Include(e => e.Teams);
+
+            var currentUserId = this.User.Identity.GetUserId();
+            var player = context.Players.Where(pl => pl.UserId == currentUserId);
+
+            ViewBag.CurrentPlayer = player;
+            return View(events);
+        }
+
+        // GET: MyEvents
+        public ActionResult MyEvents()
+        {
+            var events = context.Events.Where(e => e.Host.UserId == this.User.Identity.GetUserId());
             return View(events);
         }
 
@@ -42,31 +49,40 @@ namespace Events.WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = context.Events.Find(id);
-            if (@event == null)
+            Event eventView = context.Events.Find(id);
+            if (eventView == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(eventView);
         }
 
         // GET: Events/Create
         public ActionResult Create()
         {
-            //ViewBag.Host = this.User.Identity;
             return View();
         }
 
         // POST: Events/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventId,Title,CreatedOn,StartTime,TeamMembersCapacity,NumberOfTeams,TypeOfEventFormat,TypeOfTeamAssemble,HostId,Description")] Event eventModel)
+        public ActionResult Create(Event eventModel)
         {
+            var errors = ModelState.Select(m => m.Value.Errors);
             if (!ModelState.IsValid)
             {
-                //ViewBag.HostId = new SelectList(context.Users, "Id", "FirstName", @event.HostId);
                 return View(eventModel);
             }
+
+            string userId = this.User.Identity.GetUserId();
+            var player = context.Players.FirstOrDefault(p => p.UserId == userId);
+
+            eventModel.HostId = player.PlayerId;
+            eventModel.CreatedOn = DateTime.Now;
+            //eventModel.StartTime = DateTime.Now;
+
+
             context.Events.Add(eventModel);
             context.SaveChanges();
             return RedirectToAction("Index");
@@ -82,32 +98,27 @@ namespace Events.WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = context.Events.Find(id);
-            if (@event == null)
+            Event eventToEdit = context.Events.Find(id);
+            if (eventToEdit == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.HostId = new SelectList(context.Users, "Id", "FirstName", @event.HostId);
-            return View(@event);
+            return View(eventToEdit);
         }
 
         // POST: Events/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventId,Title,CreatedOn,StartTime,Capacity,TypeOfEventFormat,TypeOfTeamAssemble,HostId,Description")] Event @event)
+        public ActionResult Edit(Event eventModel)
         {
-            
-            
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                //context.Entry(@event).State = EntityState.Modified;
-                //context.SaveChanges();
-                return RedirectToAction("Index");
+                return View(eventModel);
             }
-            //ViewBag.HostId = new SelectList(context.Users, "Id", "FirstName", @event.HostId);
-            return View(@event);
+
+            context.Entry(eventModel).State = EntityState.Modified;
+            context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Events/Delete/5
@@ -117,12 +128,12 @@ namespace Events.WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = context.Events.Find(id);
-            if (@event == null)
+            Event eventToDelete = context.Events.Find(id);
+            if (eventToDelete == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(eventToDelete);
         }
 
         // POST: Events/Delete/5
@@ -130,8 +141,8 @@ namespace Events.WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Event @event = context.Events.Find(id);
-            context.Events.Remove(@event);
+            Event eventToDelete = context.Events.Find(id);
+            context.Events.Remove(eventToDelete);
             context.SaveChanges();
             return RedirectToAction("Index");
         }

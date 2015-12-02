@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Events.Model.Event>
 
 @{
-    ViewBag.Title = "All events";
+    ViewBag.Title = "My events";
 }
 
 <h2>All events</h2>
@@ -50,34 +50,14 @@
             <th>
                 @Html.DisplayFor(modelItem => item.TeamMembersCapacity)
             </th>
-            
             <td>
                 @Html.DisplayFor(modelItem => item.TypeOfMatchAssemble)
             </td>
             <td>
                 <div class="btn-group">
-                    @if (item.HostId != ViewBag.Player.PlayerId)
-                    {
-                        //ToDO : FIx the linq to return bool
-                        var isNotInTheEvent = item.Teams.Any(e => e.Players.Contains(ViewBag.CurrentPlayer));
-                        if (!isNotInTheEvent)
-                        {
-                            @Html.ActionLink("Join event", "JoinEvent", new { id = item.EventId }, new { @class = "btn btn-default" })
-                            @Html.ActionLink("Details", "Details", new { id = item.EventId }, new { @class = "btn btn-default" })
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Leave event", "LeaveEvent", new { id = item.EventId }, new { @class = "btn btn-default" })
-                            @Html.ActionLink("Details", "Details", new { id = item.EventId }, new { @class = "btn btn-default" })
-                        }
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.EventId }, new { @class = "btn btn-default" })
-                        @Html.ActionLink("Details", "Details", new { id = item.EventId }, new { @class = "btn btn-default" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.EventId }, new { @class = "btn btn-default" })
-                    }
-                    
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EventId }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Details", "Details", new { id = item.EventId }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EventId }, new { @class = "btn btn-default" })
                 </div>
             </td>
         </tr>
