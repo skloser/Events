@@ -1,0 +1,108 @@
+﻿@model Events.WebApplication.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>Profile</h2>
+<div id="userId" style="display:none">@Model.Id</div>
+<div>
+
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("First Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Last Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Phone number")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Subscribers count")
+        </dt>
+
+        <dd>
+            <p id="subsCount">@Html.DisplayFor(model => model.Followers.Count)</p>
+        </dd>
+
+
+        <dt>
+            @Html.DisplayName("List of events")
+        </dt>
+
+        <dd>
+            @Html.Display("List of events")
+            @foreach (var e in Model.MyEvents)
+            {
+                @Html.Display(e.Title)
+                @Html.Display(e.Description)
+                @Html.Display(e.StartTime.ToShortDateString())
+                @Html.Display(e.Address)
+                @Html.Display(e.NumberOfTeams.ToString())
+            }
+
+        </dd>
+
+    </dl>
+</div>
+
+@if (Model.Email != User.Identity.Name &&
+                                        !Model.Followers.Select(x => x.Email).ToList().Contains(User.Identity.Name))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" class="btn btn-default" value="Subscribe" id="sub" />
+        </div>
+    </div>
+}
+else
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" class="btn btn-default" value="Unsubscribe" id="unsub" />
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/ProfileJs.js"></script>
