@@ -21,6 +21,12 @@ namespace Events.WebApplication.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult CreateTeam()
+        {
+            return this.View();
+        }
+
         [HttpPost]
         public ActionResult CreateTeam(Team team)
         {
@@ -42,14 +48,9 @@ namespace Events.WebApplication.Controllers
             context.Teams.Add(teamToAdd);
             context.SaveChanges();
 
-            return View();
+            return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public ActionResult CreateTeam()
-        {
-            return this.View();
-        }
 
         [HttpGet]
         public ActionResult JoinTeam()
@@ -107,6 +108,36 @@ namespace Events.WebApplication.Controllers
             context.SaveChanges();
 
             return RedirectToAction("JoinTeam");
+        }
+
+        public ActionResult MyTeams()
+        {
+            string userId = this.User.Identity.GetUserId();
+            var player = context.Players.FirstOrDefault(p => p.UserId == userId);
+
+            List<MyTeamsViewModel> myTeamsViewModel = new List<MyTeamsViewModel>();
+
+            var myTeams = player.MyTeams.ToList();
+
+            foreach (var item in myTeams)
+            {
+                var team = new MyTeamsViewModel
+                {
+                    MyTeamViewId = item.TeamId,
+                    Name = item.Name,
+                    Members = new List<Player>()
+                    
+                };
+
+                foreach (var member in item.Players)
+                {
+                    team.Members.Add(member);
+                }
+
+                myTeamsViewModel.Add(team);
+            }
+            
+            return View(myTeamsViewModel);
         }
 
     }
