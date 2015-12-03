@@ -21,7 +21,7 @@
         //{
         //    this.context = new UnitOfWork(new EventsDbContext());
         //}
-        
+
 
         // GET: Events
         public ActionResult Index()
@@ -124,7 +124,7 @@
                     eventToLeave.Teams.Remove(team);
                 }
             }
-            
+
 
             context.SaveChanges();
 
@@ -196,6 +196,37 @@
             }
             base.Dispose(disposing);
         }
+
+        [HttpGet]
+        public ActionResult MatchAssembles(int id)
+        {
+            var currentEvent = context.Events.Find(id);
+
+            var allEventTeams = currentEvent.Teams.ToList();
+
+
+            var allMatchesForCurrentEvent = this.GenerateEventMatches(allEventTeams, id);
+
+            foreach (var match in allMatchesForCurrentEvent)
+            {
+                currentEvent.MatchStatistics.Add(match);
+
+            }
+
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        //    return RedirectToAction("DisplayAllEventMatches", id);
+        //}
+
+        public ActionResult EventMatches(int id)
+        {
+            var currentEvent = this.context.Events.Find(id);
+
+            return View(currentEvent);
+        }
+
 
         private List<Match> GenerateEventMatches(List<Team> teams, int eventID)
         {
