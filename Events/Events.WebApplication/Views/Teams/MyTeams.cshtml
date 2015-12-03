@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Events.WebApplication.Models.MyTeamsViewModel>
+
+@{
+    ViewBag.Title = "MyTeams";
+}
+
+<h2>MyTeams</h2>
+
+<table class="table">
+    <tr>
+        <th>
+        @Html.DisplayNameFor(model => model.Name)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                <ul>
+                    @foreach (var member in item.Members)
+                    {
+                        <li>
+                            @member.UserName
+                        </li>
+                    }
+                </ul>
+            </td>
+        </tr>                
+    }
+
+</table>
+
+
