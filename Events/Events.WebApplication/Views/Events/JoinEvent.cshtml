@@ -9,12 +9,12 @@
     @Html.AntiForgeryToken()
 
     @Html.Hidden("id", "id")
-    <div>
+    <div class="form-group">
         @Html.DropDownList("TeamPicked", new SelectList(ViewBag.Teams, "TeamId", "Name"), new { @class = "form-control" })
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Pick team" class="btn btn-default" />
+                <input type="submit" value="Join" class="btn btn-default" />
             </div>
         </div>
     </div>
