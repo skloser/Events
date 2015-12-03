@@ -92,6 +92,9 @@
                     
                 </div>
             </td>
+            <td>
+                @Html.ActionLink("Show matches", "EventMatches", new { id = item.EventId }, new { @class = "btn btn-default" })
+            </td>
         </tr>
     }
 

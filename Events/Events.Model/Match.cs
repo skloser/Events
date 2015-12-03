@@ -9,7 +9,7 @@
         [Key]
         public int MatchId { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         public int? HomeTeamResult { get; set; }
 

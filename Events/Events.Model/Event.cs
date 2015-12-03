@@ -15,6 +15,7 @@
         {
             this.teams = new HashSet<Team>();
             this.match = new HashSet<Match>();
+            this.CreatedOn = DateTime.Now;
         }
 
         [Key]
