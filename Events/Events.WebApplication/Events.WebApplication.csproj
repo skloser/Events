@@ -259,6 +259,7 @@
     <Content Include="Views\Statistics\Index.cshtml" />
     <Content Include="Views\Statistics\UserStatistics.cshtml" />
     <Content Include="Views\Teams\MyTeams.cshtml" />
+    <Content Include="Views\Events\JoinEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

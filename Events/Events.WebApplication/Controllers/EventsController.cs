@@ -26,10 +26,10 @@
         // GET: Events
         public ActionResult Index()
         {
-            var events = context.Events.Include(e => e.Teams);
+            var events = context.Events.Include(e => e.Teams).ToList();
 
             var currentUserId = this.User.Identity.GetUserId();
-            var player = context.Players.Where(pl => pl.UserId == currentUserId);
+            var player = context.Players.FirstOrDefault(pl => pl.UserId == currentUserId);
 
             ViewBag.CurrentPlayer = player;
             return View(events);
@@ -38,7 +38,8 @@
         // GET: MyEvents
         public ActionResult MyEvents()
         {
-            var events = context.Events.Where(e => e.Host.UserId == this.User.Identity.GetUserId());
+            var userId = this.User.Identity.GetUserId();
+            var events = context.Events.Where(e => e.Host.UserId == userId).Include(e => e.Teams).ToList();
             return View(events);
         }
 
@@ -88,7 +89,47 @@
             return RedirectToAction("Index");
         }
 
+        public ActionResult JoinEvent(int id)
+        {
+            var userId = this.User.Identity.GetUserId();
+            var player = context.Players.FirstOrDefault(p => p.UserId == userId);
+            ViewBag.Teams = player.MyTeams;
+            return View(id);
+        }
 
+        [HttpPost]
+        public ActionResult JoinEvent(int id, int TeamPicked)
+        {
+            var eventToJoin = context.Events.Find(id);
+            var teamJoining = context.Teams.Find(TeamPicked);
+
+            eventToJoin.Teams.Add(teamJoining);
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult LeaveEvent(int id)
+        {
+            var userId = this.User.Identity.GetUserId();
+            var player = context.Players.FirstOrDefault(p => p.UserId == userId);
+
+            var eventToLeave = context.Events.Find(id);
+
+            var eventTeams = eventToLeave.Teams.ToList();
+            foreach (var team in eventTeams)
+            {
+                if (player.MyTeams.Contains(team))
+                {
+                    eventToLeave.Teams.Remove(team);
+                }
+            }
+            
+
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
 
 
         // GET: Events/Edit/5
@@ -111,6 +152,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Event eventModel)
         {
+            //[Bind(Include = "Title,StartTime,PredefinedSport,TeamMembersCapacity,NumberOfTeams,Address,TypeOfMatchAssemble,Description ")]
             if (!ModelState.IsValid)
             {
                 return View(eventModel);
