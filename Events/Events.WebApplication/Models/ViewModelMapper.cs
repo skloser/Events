@@ -1,11 +1,11 @@
-﻿using Events.Model.ViewModels;
+﻿using Events.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Events.Model.ViewModels
+namespace Events.WebApplication.Models
 {
     public static class ViewModelMapper
     {

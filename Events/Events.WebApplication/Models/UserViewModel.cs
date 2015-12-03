@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Events.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Events.Model.ViewModels
+namespace Events.WebApplication.Models
 {
     public class UserViewModel
     {

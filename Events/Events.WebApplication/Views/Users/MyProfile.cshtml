@@ -1,4 +1,4 @@
-﻿@model Events.Model.ViewModels.UserViewModel
+﻿@model Events.WebApplication.Models.UserViewModel
 
 @{
     ViewBag.Title = "MyProfile";
@@ -7,7 +7,7 @@
 <h2>MyProfile</h2>
 
 <div>
-
+    
     <hr />
     @using (Html.BeginForm("UpdateProfileAsync", "Users", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {

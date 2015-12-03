@@ -1,4 +1,4 @@
-﻿@model Events.Model.ViewModels.UserViewModel
+﻿@model Events.WebApplication.Models.UserViewModel
 
 @{
     ViewBag.Title = "Profile";
@@ -79,7 +79,6 @@
                 @Html.Display(e.Description)
                 @Html.Display(e.StartTime.ToShortDateString())
                 @Html.Display(e.Address)
-                @Html.Display(e.TypeOfEventFormat.ToString())
                 @Html.Display(e.NumberOfTeams.ToString())
             }
 
@@ -89,7 +88,7 @@
 </div>
 
 @if (Model.Email != User.Identity.Name &&
-                !Model.Followers.Select(x => x.Email).ToList().Contains(User.Identity.Name))
+                            !Model.Followers.Select(x => x.Email).ToList().Contains(User.Identity.Name))
 {
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
