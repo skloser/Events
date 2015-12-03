@@ -152,7 +152,6 @@
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Event eventModel)
         {
-            //[Bind(Include = "Title,StartTime,PredefinedSport,TeamMembersCapacity,NumberOfTeams,Address,TypeOfMatchAssemble,Description ")]
             if (!ModelState.IsValid)
             {
                 return View(eventModel);
