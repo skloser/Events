@@ -196,6 +196,35 @@
             }
             base.Dispose(disposing);
         }
+
+        private List<Match> GenerateEventMatches(List<Team> teams, int eventID)
+        {
+            var matches = new List<Match>();
+            var teamsToChange = teams.ToList();
+            //var firstTeam = teamsToChange.First();
+            for (int i = 0, j = teamsToChange.Count; i < j; i++)
+            {
+                var firstTeam = teamsToChange.First();
+                teamsToChange.Remove(firstTeam);
+                matches.AddRange(GenerateMatches(teamsToChange, firstTeam, eventID));
+            }
+            return matches;
+        }
+
+        private List<Match> GenerateMatches(List<Team> teamsToPlayWith, Team teamFirst, int eventId)
+        {
+            var matches = new List<Match>();
+            foreach (var team in teamsToPlayWith)
+            {
+                var match = new Match();
+                match.HomeTeam = teamFirst;
+                match.GuestTeam = team;
+                match.EventId = eventId;
+                matches.Add(match);
+            }
+            return matches;
+        }
+
     }
 }
 
