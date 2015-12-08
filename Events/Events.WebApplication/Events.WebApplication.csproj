@@ -266,10 +266,13 @@
     <Content Include="Views\Events\JoinEvent.cshtml" />
     <Content Include="Views\Users\MyProfile.cshtml" />
     <Content Include="Views\Users\Profile.cshtml" />
+    <Content Include="Views\Events\EventMatches.cshtml" />
+    <Content Include="Views\Teams\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\GenerateMatches\" />
+    <Folder Include="Views\Matches\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

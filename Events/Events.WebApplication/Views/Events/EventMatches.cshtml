@@ -1,0 +1,30 @@
+﻿@model Events.Model.Event
+
+@{
+    ViewBag.Title = "MatchAssembles";
+}
+
+<h2>MatchAssembles</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Home Team names
+        </th>
+        <th>
+            Guest Team Name
+        </th>
+    </tr>
+    @foreach (var item in Model.MatchStatistics)
+    {
+        <tr>
+            <td>
+                @item.HomeTeam.Name
+            </td>
+            <td>
+                @item.GuestTeam.Name
+            </td>
+        </tr>
+    }
+</table>
+
