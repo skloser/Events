@@ -7,7 +7,7 @@
 <h2>JoinTeam</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "CreateTeam")
 </p>
 <table class="table">
     <tr>
@@ -54,3 +54,7 @@
     }
 
 </table>
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Home",null, new { @class = "btn btn-default" })
+</div>
