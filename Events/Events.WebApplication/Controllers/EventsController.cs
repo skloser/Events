@@ -17,12 +17,6 @@
     {
         private EventsDbContext context = new EventsDbContext();
 
-        //public EventsController()
-        //{
-        //    this.context = new UnitOfWork(new EventsDbContext());
-        //}
-
-
         // GET: Events
         public ActionResult Index()
         {
@@ -107,11 +101,23 @@
         }
 
         [HttpPost]
-        public ActionResult JoinEvent(int id, int TeamPicked)
+        public ActionResult JoinEvent(int? id, int? TeamPicked)
         {
-
-            var eventToJoin = context.Events.Find(id);
-            var teamJoining = context.Teams.Find(TeamPicked);
+            if(id == null || TeamPicked == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var eventToJoin = context.Events.Find(id.Value);
+            if (eventToJoin == null)
+            {
+                return HttpNotFound();
+            }
+            
+            var teamJoining = context.Teams.Find(TeamPicked.Value);
+            if (teamJoining == null)
+            {
+                return HttpNotFound();
+            }
 
             eventToJoin.Teams.Add(teamJoining);
             context.SaveChanges();
