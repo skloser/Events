@@ -17,19 +17,12 @@
     {
         private EventsDbContext context = new EventsDbContext();
 
-        //public EventsController()
-        //{
-        //    this.context = new UnitOfWork(new EventsDbContext());
-        //}
-
-
         // GET: Events
         public ActionResult Index()
         {
             var events = context.Events.Include(e => e.Teams).ToList();
 
-            var currentUserId = this.User.Identity.GetUserId();
-            var player = context.Players.FirstOrDefault(pl => pl.UserId == currentUserId);
+            var player = CurrentPlayer();
 
             ViewBag.CurrentPlayer = player;
             return View(events);
@@ -75,9 +68,7 @@
             {
                 return View(eventModel);
             }
-
-            string userId = this.User.Identity.GetUserId();
-            var player = context.Players.FirstOrDefault(p => p.UserId == userId);
+            var player = CurrentPlayer();
 
             eventModel.HostId = player.PlayerId;
             eventModel.CreatedOn = DateTime.Now;
@@ -89,19 +80,44 @@
             return RedirectToAction("Index");
         }
 
-        public ActionResult JoinEvent(int id)
+        public ActionResult JoinEvent(int? id)
         {
-            var userId = this.User.Identity.GetUserId();
-            var player = context.Players.FirstOrDefault(p => p.UserId == userId);
-            ViewBag.Teams = player.MyTeams;
-            return View(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var player = CurrentPlayer();
+
+            var eventSearched = context.Events.Find(id);
+            if (eventSearched == null)
+            {
+                return HttpNotFound();
+            }
+            //Player teams that fit the requirement of the event
+            var playerTeams = player.MyTeams.Where(t => t.Players.Count == eventSearched.TeamMembersCapacity);
+            ViewBag.Teams = playerTeams;
+            return View((int)id);
         }
 
         [HttpPost]
-        public ActionResult JoinEvent(int id, int TeamPicked)
+        public ActionResult JoinEvent(int? id, int? TeamPicked)
         {
-            var eventToJoin = context.Events.Find(id);
-            var teamJoining = context.Teams.Find(TeamPicked);
+            if(id == null || TeamPicked == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var eventToJoin = context.Events.Find(id.Value);
+            if (eventToJoin == null)
+            {
+                return HttpNotFound();
+            }
+            
+            var teamJoining = context.Teams.Find(TeamPicked.Value);
+            if (teamJoining == null)
+            {
+                return HttpNotFound();
+            }
 
             eventToJoin.Teams.Add(teamJoining);
             context.SaveChanges();
@@ -111,8 +127,7 @@
 
         public ActionResult LeaveEvent(int id)
         {
-            var userId = this.User.Identity.GetUserId();
-            var player = context.Players.FirstOrDefault(p => p.UserId == userId);
+            var player = CurrentPlayer();
 
             var eventToLeave = context.Events.Find(id);
 
@@ -254,6 +269,13 @@
                 matches.Add(match);
             }
             return matches;
+        }
+
+        private Player CurrentPlayer()
+        {
+            var userId = this.User.Identity.GetUserId();
+            var player = context.Players.FirstOrDefault(p => p.UserId == userId);
+            return player;
         }
 
     }
