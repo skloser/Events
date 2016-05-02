@@ -16,7 +16,6 @@
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private EventsDbContext eventsDbContext;
 
         public AccountController()
         {
@@ -73,7 +72,7 @@
                 return View(model);
             }
             
-            var result = SignInManager.PasswordSignIn(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -160,33 +159,28 @@
                     PhoneNumber = model.PhoneNumber
                 };
 
-                var result = UserManager.Create(user, model.Password);
+                var result = await UserManager.CreateAsync(user, model.Password);
                 
-                this.eventsDbContext = new EventsDbContext();
-
-                if (result != null)
-                {
-                    string currentUserId = user.Id;
-
-                    var player = new Player
-                    {
-                        UserName = model.UserName,
-                        UserId = user.Id
-                    };
-
-                    this.eventsDbContext.Players.Add(player);
-                    this.eventsDbContext.SaveChanges();
-                }
-
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    var player = new Player
+                    {
+                        UserName = user.UserName,
+                        UserId = user.Id
+                    };
+
+                    var eventsContext = new EventsDbContext();
+
+                    eventsContext.Players.Add(player);
+                    eventsContext.SaveChanges();
 
                     return RedirectToAction("Index", "Home");
                 }
