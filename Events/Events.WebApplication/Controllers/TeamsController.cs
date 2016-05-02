@@ -24,7 +24,7 @@ namespace Events.WebApplication.Controllers
         [HttpGet]
         public ActionResult CreateTeam()
         {
-            return this.View();
+            return View();
         }
 
         [HttpPost]
@@ -109,7 +109,7 @@ namespace Events.WebApplication.Controllers
 
             return RedirectToAction("JoinTeam");
         }
-
+        
         public ActionResult MyTeams()
         {
             string userId = this.User.Identity.GetUserId();

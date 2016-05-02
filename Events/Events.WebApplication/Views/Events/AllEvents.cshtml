@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Events.WebApplication.Models.Events.EventViewModel>
+
+@foreach (var sportEvent in Model)
+{
+    <div>
+        <p>@sportEvent.Title</p>
+    </div>
+}

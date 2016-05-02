@@ -180,6 +180,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Events\EventViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MyTeamsViewModel.cs" />
     <Compile Include="Models\TeamsViewModel.cs" />
@@ -268,6 +269,7 @@
     <Content Include="Views\Users\Profile.cshtml" />
     <Content Include="Views\Events\EventMatches.cshtml" />
     <Content Include="Views\Teams\Index.cshtml" />
+    <Content Include="Views\Events\AllEvents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

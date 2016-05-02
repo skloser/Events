@@ -1,6 +1,6 @@
 ﻿namespace Events.WebApplication.Models
 {
-    using Events.Model;
+    using Model;
     using System.Collections.Generic;
 
     public class TeamsViewModel
