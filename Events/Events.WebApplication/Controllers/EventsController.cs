@@ -12,6 +12,7 @@
     using Events.Model;
     using Microsoft.AspNet.Identity;
     using Model.Enumerations;
+    using Models.Events;
 
     public class EventsController : Controller
     {
@@ -26,6 +27,22 @@
 
             ViewBag.CurrentPlayer = player;
             return View(events);
+        }
+
+        public ActionResult AllEvents()
+        {
+            var allEvents = context.Events.ToList();
+            var allEventsViewModel = new List<EventViewModel>();
+
+            foreach (var sportEvent in allEvents)
+            {
+                var eventViewModel = new EventViewModel();
+                eventViewModel.Title = sportEvent.Title;
+                allEventsViewModel.Add(eventViewModel);
+            }
+
+
+            return View(allEventsViewModel);
         }
 
         // GET: MyEvents

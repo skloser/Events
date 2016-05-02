@@ -61,10 +61,7 @@ namespace Events.WebApplication.Controllers
             }
             return View("Profile", userVM);
         }
-
-
-
-
+        
         [Authorize]
         public JsonResult Subscribe(string id)
         {
